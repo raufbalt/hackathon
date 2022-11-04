@@ -6,9 +6,9 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.generics import GenericAPIView
 
 from . import serializers
-from .send_email import send_confirmation_email, send_code_password_reset
+from .send_email import send_code_password_reset
 from django.contrib.auth import get_user_model
-
+from main.tasks import send_email_task
 User = get_user_model()
 
 
@@ -20,7 +20,7 @@ class RegistrationView(APIView):
         if serializer.is_valid(raise_exception=True):
             user = serializer.save()
             if user:
-                send_confirmation_email(user.email, user.activation_code)
+                send_email_task(user.email, user.activation_code)
             return Response(serializer.data, status=201)
         return Response('Bad request!', status=400)
 
@@ -78,6 +78,7 @@ class ForgotPasswordView(APIView):
 
 
 class RestorePasswordView(APIView):
+
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request):

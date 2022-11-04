@@ -5,8 +5,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Service, Category, Subcategory
-from .permissions import IsWorker
+from .models import Service, Category
 from .serializers import ServiceSerializer, CategorySerializer, SubcategorySerializer
 
 
@@ -26,7 +25,7 @@ class ServiceViewSet(ModelViewSet):
 
     def get_permissions(self):
         if self.action in ('update', 'partial_update', 'destroy'):
-            return [permissions.IsAdminUser(), IsWorker()]
+            return [permissions.IsAdminUser()]
         return [permissions.IsAuthenticatedOrReadOnly()]
 
 
@@ -39,12 +38,3 @@ class CategoryViewSet(ModelViewSet):
             return [permissions.IsAdminUser()]
         return [permissions.IsAuthenticatedOrReadOnly()]
 
-
-class SubcategoryViewSet(ModelViewSet):
-    queryset = Subcategory.objects.all()
-    serializer_class = SubcategorySerializer
-
-    def get_permissions(self):
-        if self.action in ('update', 'partial_update', 'destroy'):
-            return [permissions.IsAdminUser()]
-        return [permissions.IsAuthenticatedOrReadOnly()]

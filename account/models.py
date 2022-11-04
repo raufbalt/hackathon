@@ -35,6 +35,12 @@ class UserManager(BaseUserManager):
         return self._create_user(email, password, **kwargs)
 
 
+class AccountCategory(models.Model):
+    one = 1
+    two = 2
+    choice = ((one, 'client'), (two, 'executor'))
+
+
 class Account(AbstractUser):
     email = models.EmailField('email address', unique=True)
     name = models.CharField(max_length=20, blank=True)
@@ -48,6 +54,7 @@ class Account(AbstractUser):
                                         'Designates whether this user should be treted as active.'
                                         'Unselect this instead of deleting accounts.'
                                     ))
+    user = models.PositiveSmallIntegerField(choices=AccountCategory.choice, null=True)
 
     created_at = models.DateTimeField
 

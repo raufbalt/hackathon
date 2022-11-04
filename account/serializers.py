@@ -14,7 +14,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'name', 'last_name', 'phone_number', 'city', 'password', 'password2')
+        fields = ('email', 'name', 'last_name', 'phone_number', 'city', 'user', 'password', 'password2')
 
     def validate(self, attrs):
         password2 = attrs.pop('password2')
@@ -81,7 +81,7 @@ class RestorePasswordSerializer(serializers.Serializer):
         data = self.validated_data
         user = data.user
         user.set_password(data['password'])
-        user.acticate_code = ''
+        user.activate_code = ''
         user.save()
         return user
 
