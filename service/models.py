@@ -19,7 +19,6 @@ class Service(models.Model):
 
 class Category(models.Model):
     title = models.CharField(max_length=30, unique=True)
-    image = models.ImageField(upload_to='media/', null=True, blank=True)
 
     class Meta:
         verbose_name = 'Category'
