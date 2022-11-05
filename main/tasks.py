@@ -3,7 +3,7 @@ from django.core.mail import send_mail
 
 @app.task
 def send_email_task(user, code):
-    full_link = f'http://35.222.42.99/api/v1/accounts/activate/{code}/'
+    full_link = f'http://localhost:8000/api/v1/accounts/activate/{code}/'
     send_mail(
         'Здравствуйте, активируйте ваш аккаунт.',
         f'Чтобы активировать аккаунт, аам необходимо перейти по ссылке: {full_link}',

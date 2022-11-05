@@ -6,7 +6,7 @@ User = get_user_model()
 
 class Service(models.Model):
     title = models.CharField(max_length=30, unique=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     desc = models.CharField(max_length=50, null=True, blank=True)
     image = models.ImageField(upload_to='media/', null=True, blank=True)
     category = models.ForeignKey('Category', on_delete=models.SET_NULL, blank=True, null=True)

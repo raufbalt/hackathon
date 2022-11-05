@@ -14,7 +14,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'name', 'last_name', 'phone_number', 'city', 'user', 'password', 'password2')
+        fields = ('email', 'first_name', 'last_name', 'phone_number', 'status', 'password', 'password2', 'image')
 
     def validate(self, attrs):
         password2 = attrs.pop('password2')
@@ -47,41 +47,40 @@ class LogoutSerializer(serializers.Serializer):
 
 
 class ForgotPasswordSerializer(serializers.Serializer):
-    serializer = serializers.EmailField(max_length=100,
-                                        required=True)
+    email = serializers.EmailField(max_length=100,
+                                   required=True)
 
 
 class RestorePasswordSerializer(serializers.Serializer):
     code = serializers.CharField(max_length=100,
                                  required=True)
-    password = serializers.CharField(min_length=8, max_length=20,
-                                     required=True, write_only=True)
-    password2 = serializers.CharField(min_length=8, max_length=20,
-                                      required=True, write_only=True)
+    password = serializers.CharField(min_length=8,
+                                     required=True)
+    password2 = serializers.CharField(min_length=8,
+                                      required=True)
 
     def validate(self, attrs):
         password2 = attrs.pop('password2')
-        if attrs['password'] != password2:
-            raise serializers.ValidationError('Passwords did not match!')
-        if not attrs['password'].isalnum():
-            raise serializers.ValidationError('Password field must contain'
-                                              'alpha symbols and numbers!')
+        if password2 != attrs['password']:
+            raise serializers.ValidationError(
+                'Passwords didn\'t match!'
+            )
         try:
             user = User.objects.get(
                 activation_code=attrs['code']
             )
         except User.DoesNotExist:
             raise serializers.ValidationError(
-                'Invalid code'
+                'Your code is incorrect!'
             )
         attrs['user'] = user
         return attrs
 
     def save(self, **kwargs):
         data = self.validated_data
-        user = data.user
+        user = data['user']
         user.set_password(data['password'])
-        user.activate_code = ''
+        user.activation_code = ''
         user.save()
         return user
 

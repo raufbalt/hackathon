@@ -3,7 +3,7 @@ from service.models import Service, Category
 
 
 class ServiceSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source='auth.user')
+    owner = serializers.ReadOnlyField(source='auth.user')
 
     class Meta:
         model = Service
@@ -11,7 +11,7 @@ class ServiceSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         a = self._context['request']
-        if a.user.user != 2:
+        if a.user.status != 2:
             raise serializers.ValidationError(
                 'You are not executor!'
             )

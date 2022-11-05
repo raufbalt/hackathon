@@ -6,7 +6,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Service, Category
-from .serializers import ServiceSerializer, CategorySerializer, SubcategorySerializer
+from .serializers import ServiceSerializer, CategorySerializer
 
 
 class StandartResultsPagination(PageNumberPagination):
@@ -23,10 +23,12 @@ class ServiceViewSet(ModelViewSet):
     filterset_fields = ('category',)
     pagination_class = StandartResultsPagination
 
-    def get_permissions(self):
-        if self.action in ('update', 'partial_update', 'destroy'):
-            return [permissions.IsAdminUser()]
-        return [permissions.IsAuthenticatedOrReadOnly()]
+    def perform_create(self, serializer):
+        data = self.request.data
+        Service.objects.create(
+            owner=self.request.user,
+            title=data['title']
+        )
 
 
 class CategoryViewSet(ModelViewSet):
