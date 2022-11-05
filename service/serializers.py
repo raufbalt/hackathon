@@ -7,7 +7,7 @@ class ServiceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Service
-        fields = "__all__"
+        fields = '__all__'
 
     def validate(self, attrs):
         a = self._context['request']
