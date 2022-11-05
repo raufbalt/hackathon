@@ -5,10 +5,12 @@ User = get_user_model()
 
 
 class Service(models.Model):
-    title = models.CharField(max_length=30, unique=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    desc = models.CharField(max_length=50, null=True, blank=True)
-    image = models.ImageField(upload_to='media/', null=True, blank=True)
+    experience = models.CharField(max_length=50)
+    hour_from = models.CharField(max_length=10)
+    hour_to = models.CharField(max_length=10)
+    desc = models.CharField(max_length=50, blank=True)
+    price = models.CharField(max_length=10)
     category = models.ForeignKey('Category', on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
