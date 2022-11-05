@@ -36,7 +36,7 @@ class CategoryViewSet(ModelViewSet):
     serializer_class = CategorySerializer
 
     def get_permissions(self):
-        if self.action in ('update', 'partial_update', 'destroy'):
+        if self.action in ('update', 'partial_update', 'delete'):
             return [permissions.IsAdminUser()]
         return [permissions.IsAuthenticatedOrReadOnly()]
 
