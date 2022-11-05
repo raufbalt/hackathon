@@ -27,7 +27,6 @@ class ServiceViewSet(ModelViewSet):
         data = self.request.data
         Service.objects.create(
             owner=self.request.user,
-            title=data['title']
         )
 
 
