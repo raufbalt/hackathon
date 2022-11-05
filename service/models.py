@@ -6,11 +6,11 @@ User = get_user_model()
 
 class Service(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    experience = models.CharField(max_length=50)
-    hour_from = models.CharField(max_length=10)
-    hour_to = models.CharField(max_length=10)
+    experience = models.CharField(max_length=50, null=True)
+    hour_from = models.CharField(max_length=10, null=True)
+    hour_to = models.CharField(max_length=10, null=True)
     desc = models.CharField(max_length=50, blank=True)
-    price = models.CharField(max_length=10)
+    price = models.CharField(max_length=10, null=True)
     category = models.ForeignKey('Category', on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
