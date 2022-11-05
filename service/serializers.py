@@ -21,5 +21,5 @@ class ServiceSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ('id','title')
+        fields = ('id', 'title')
 
