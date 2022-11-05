@@ -42,7 +42,7 @@ class AccountCategory(models.Model):
 class Account(AbstractUser):
     email = models.EmailField('email address', unique=True)
     activation_code = models.CharField(max_length=255, blank=True)
-    phone = models.CharField(max_length=40, blank=True, null=True)
+    phone_number = models.CharField(max_length=40, blank=True, null=True)
 
     status = models.PositiveSmallIntegerField(choices=AccountCategory.choice, null=True)
     first_name = models.CharField(max_length=100)
