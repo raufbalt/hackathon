@@ -1,5 +1,5 @@
-amqp
-asgiref
+amqp==5.1.1
+asgiref==3.5.2
 async-timeout==4.0.2
 backports.zoneinfo==0.2.1
 billiard==3.6.4.0
@@ -24,6 +24,7 @@ djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.1
 drf-yasg==1.21.4
 filelock==3.8.0
+gunicorn==20.1.0
 idna==3.4
 inflection==0.5.1
 itypes==1.2.0
