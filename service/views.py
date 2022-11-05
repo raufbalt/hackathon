@@ -19,7 +19,7 @@ class ServiceViewSet(ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
     filter_backends = (SearchFilter, DjangoFilterBackend)
-    search_fields = ('title',)
+    search_fields = ('category',)
     filterset_fields = ('category',)
     pagination_class = StandartResultsPagination
 
