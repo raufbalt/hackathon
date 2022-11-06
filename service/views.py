@@ -6,6 +6,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Service, Category
+from .permissions import IsOwner
 from .serializers import ServiceSerializer, CategorySerializer
 
 
@@ -27,7 +28,19 @@ class ServiceViewSet(ModelViewSet):
         data = self.request.data
         Service.objects.create(
             owner=self.request.user,
+            price=self.request.data.get("price", None),
+            experience=self.request.data.get("experience", None),
+            hour_from=self.request.data.get("hour_from", None),
+            hour_to=self.request.data.get("hour_to", None),
+            desc=self.request.data.get("desc", None),
+            category=self.request.data.get("category", None)
+
         )
+
+    def get_permissions(self):
+        if self.action in ('update', 'partial_update', 'delete'):
+            return [IsOwner()]
+        return [permissions.IsAuthenticatedOrReadOnly()]
 
 
 class CategoryViewSet(ModelViewSet):
@@ -38,4 +51,3 @@ class CategoryViewSet(ModelViewSet):
         if self.action in ('update', 'partial_update', 'delete'):
             return [permissions.IsAdminUser()]
         return [permissions.IsAuthenticatedOrReadOnly()]
-
