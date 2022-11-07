@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'django_celery_beat',
     'corsheaders',
+    'social_django',
 
     # my_apps
     'account',
@@ -60,7 +61,7 @@ ROOT_URLCONF = 'main.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -90,6 +91,10 @@ DATABASES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -224,3 +229,7 @@ CORS_ALLOW_HEADERS = [
 ]
 # ----
 
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
+SOCIAL_AUTH_GITHUB_KEY = '6e492c48e24ef64c9e7e'
+SOCIAL_AUTH_GITHUB_SECRET = 'ed4dcabfa272eb59da5274dda3b3a91abacfdfff'
+SOCIAL_AUTH_GITHUB_SCOPE = ['user:email']

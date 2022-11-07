@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import permissions
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -9,11 +10,16 @@ from . import serializers
 from .send_email import send_code_password_reset
 from django.contrib.auth import get_user_model
 from main.tasks import send_email_task
+
 User = get_user_model()
+
+def auth(request):
+    return render(request, 'oauth.html')
 
 
 class RegistrationView(APIView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.AllowAny, IsAuthenticated)
+
 
     def post(self, request):
         serializer = serializers.RegisterSerializer(data=request.data)

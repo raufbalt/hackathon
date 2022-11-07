@@ -25,6 +25,8 @@ from rest_framework.routers import SimpleRouter
 
 from django.urls import re_path as url
 
+from account.views import auth
+
 schema_view = get_schema_view(
    openapi.Info(
       title="Video hosting test project",
@@ -48,5 +50,8 @@ urlpatterns = [
     path('api/v1/', include(router.urls)),
     path('api/v1/accounts/', include('account.urls')),
     path('api/v1/', include('service.urls')),
+    path('', include('social_django.urls', namespace='social')),
+    path('auth/', auth),
+
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
