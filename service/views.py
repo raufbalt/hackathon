@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import permissions
+from rest_framework import permissions, response
+from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
@@ -8,7 +9,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from .models import Service, Category
 from .permissions import IsOwner
-from .serializers import ServiceSerializer, CategorySerializer
+from .serializers import ServiceSerializer, CategorySerializer, ReviewSerializer
 
 
 class StandartResultsPagination(PageNumberPagination):
@@ -40,6 +41,23 @@ class ServiceViewSet(ModelViewSet):
             category=category1
 
         )
+
+    # api/v1/service/<id>/reviews/
+    @action(['GET', 'POST'], detail=True)
+    def reviews(self, request, pk):
+        service = self.get_object()
+        if request.method == 'GET':
+            reviews = service.reviews.all()
+            serializer = ReviewSerializer(reviews, many=True)
+            print(serializer.data, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+            return response.Response(serializer.data, status=200)
+        if service.reviews.filter(owner=request.user).exists():
+            return response.Response('Вы уже оставляли отзыв', status=400)
+        data = request.data
+        serializer = ReviewSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(owner=request.user, service=service)
+        return response.Response(serializer.data, status=201)
 
     def get_permissions(self):
         if self.action in ('update', 'partial_update', 'delete'):
