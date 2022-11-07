@@ -14,7 +14,7 @@ class Service(models.Model):
     category = models.ForeignKey('Category', on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
-        return f'{self.title}'
+        return f'{self.owner}'
 
 
 class Category(models.Model):

@@ -199,6 +199,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
     "http://34.67.85.209",
+    "http://locahost:3000"
 ]
 
 CORS_ALLOW_METHODS = [
