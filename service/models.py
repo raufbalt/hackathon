@@ -48,5 +48,18 @@ class Review(models.Model):
         return f'{self.owner} -> {self.service}'
 
 
+class Favorite(models.Model):
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Favorite'
+        verbose_name_plural = 'Favorites'
+        unique_together = ['owner', 'service']
+
+    def __str__(self):
+        return f'{self.owner}`s favorites'
+
+
 
 

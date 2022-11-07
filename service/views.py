@@ -7,9 +7,9 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Service, Category
+from .models import Service, Category, Favorite
 from .permissions import IsOwner
-from .serializers import ServiceSerializer, CategorySerializer, ReviewSerializer
+from .serializers import ServiceSerializer, CategorySerializer, ReviewSerializer, FavoriteSerializer
 
 
 class StandartResultsPagination(PageNumberPagination):
@@ -73,3 +73,19 @@ class CategoryViewSet(ModelViewSet):
         if self.action in ('update', 'partial_update', 'delete'):
             return [permissions.IsAdminUser()]
         return [permissions.IsAuthenticatedOrReadOnly()]
+
+
+class FavoriteViewSet(ModelViewSet):
+    queryset = Favorite.objects.all()
+    serializer_class = FavoriteSerializer
+    permission_classes = [IsOwner]
+
+    def perform_create(self, serializer):
+        data = self.request.data
+        service = self.request.data.get('service', None)
+        service = int(service)
+        service1 = get_object_or_404(Service, id=service)
+        Favorite.objects.create(
+            owner=self.request.user,
+            service=service1
+        )

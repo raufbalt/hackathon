@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from service.models import Service, Category, Review
+from service.models import Service, Category, Review, Favorite
 
 
 class ServiceSerializer(serializers.ModelSerializer):
@@ -18,8 +18,6 @@ class ServiceSerializer(serializers.ModelSerializer):
         return attrs
 
 
-
-
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -33,4 +31,13 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = "__all__"
+
+
+class FavoriteSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.email')
+    service = serializers.ReadOnlyField(source='service.experience')
+
+    class Meta:
+        model = Favorite
+        fields = '__all__'
 
