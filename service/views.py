@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import permissions
 from rest_framework.filters import SearchFilter
 from rest_framework.pagination import PageNumberPagination
@@ -26,6 +27,9 @@ class ServiceViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         data = self.request.data
+        category = self.request.data.get('category', None)
+        category = int(category)
+        category1 = get_object_or_404(Category, id=category)
         Service.objects.create(
             owner=self.request.user,
             price=self.request.data.get("price", None),
@@ -33,7 +37,7 @@ class ServiceViewSet(ModelViewSet):
             hour_from=self.request.data.get("hour_from", None),
             hour_to=self.request.data.get("hour_to", None),
             desc=self.request.data.get("desc", None),
-            category=self.request.data.get("category", None)
+            category=category1
 
         )
 
