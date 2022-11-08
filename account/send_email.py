@@ -7,7 +7,7 @@ def send_code_password_reset(user):
     send_mail(
         'Письмо с кодом для сброса пароля!',
         f'Ваш код для того чтобы восстановить пароль: {code}\nНикому не передавайте этот код!',
-        'from@examle.com',
+        'kutmanvip01@gmail.com',
         [email],
         fail_silently=False
     )
