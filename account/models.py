@@ -67,3 +67,7 @@ class Account(AbstractUser):
         code = str(uuid.uuid4())
         self.activation_code = code
 
+
+#  ДЛЯ ТОГО ЧТОБЫ ОТПРАВИТЬ ПИСЬМО СПАМ
+class Spam_Contacts(models.Model):
+    email = models.EmailField('email address',unique=True)
