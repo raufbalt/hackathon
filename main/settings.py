@@ -37,11 +37,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'django_celery_beat',
     'corsheaders',
-<<<<<<< HEAD
     'social-django'
-=======
     'social_django',
->>>>>>> af67af9879578707a8f0f4098c5bfa2e9642b3fd
 
     # my_apps
     'account',
