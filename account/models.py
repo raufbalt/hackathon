@@ -70,20 +70,12 @@ class Account(AbstractUser):
 
 #  ДЛЯ ТОГО ЧТОБЫ ОТПРАВИТЬ ПИСЬМО СПАМ
 class Spam_Contacts(models.Model):
-<<<<<<< HEAD
     email = models.EmailField('email address', unique=True)
-=======
-    email = models.EmailField('email address',unique=True)
->>>>>>> af67af9879578707a8f0f4098c5bfa2e9642b3fd
+
 
     def __str__(self):
         return self.email
 
     class Meta:
-<<<<<<< HEAD
         verbose_name = 'Спам почта'
         verbose_name_plural = 'Адреса для спама'
-=======
-        verbose_name = 'Спам для контакта'
-        verbose_name_plural = ''
->>>>>>> af67af9879578707a8f0f4098c5bfa2e9642b3fd
