@@ -9,8 +9,11 @@ from . import serializers
 from .send_email import send_code_password_reset
 from django.contrib.auth import get_user_model
 from main.tasks import send_email_task
+
 User = get_user_model()
 
+def auth(request):
+    return render(request, 'oauth.html')
 
 class RegistrationView(APIView):
     permission_classes = (permissions.AllowAny,)

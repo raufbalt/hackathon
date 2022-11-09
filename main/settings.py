@@ -37,11 +37,16 @@ INSTALLED_APPS = [
     'drf_yasg',
     'django_celery_beat',
     'corsheaders',
+<<<<<<< HEAD
     'social-django'
+=======
+    'social_django',
+>>>>>>> af67af9879578707a8f0f4098c5bfa2e9642b3fd
 
     # my_apps
     'account',
     'service',
+
 ]
 
 MIDDLEWARE = [
@@ -89,6 +94,11 @@ DATABASES = {
         'PORT': config('DB_PORT', cast=int),
     }
 }
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 
 # Password validation
@@ -224,3 +234,17 @@ CORS_ALLOW_HEADERS = [
 ]
 # ----
 
+
+
+SOCIAL_AUTH_JSONFIELD_ENABLED = config('SOCIAL_AUTH_JSONFIELD_ENABLED',cast=bool)
+SOCIAL_AUTH_GITHUB_KEY = config('SOCIAL_AUTH_GITHUB_KEY')
+SOCIAL_AUTH_GITHUB_SECRET = config('SOCIAL_AUTH_GITHUB_SECRET')
+SOCIAL_AUTH_GITHUB_SCOPE = ['user:email']
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'cache'),
+    }
+}
