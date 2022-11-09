@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'django_celery_beat',
     'corsheaders',
+    'social-django'
 
     # my_apps
     'account',
@@ -59,7 +60,7 @@ ROOT_URLCONF = 'main.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
