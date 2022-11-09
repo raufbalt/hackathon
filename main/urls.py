@@ -30,11 +30,8 @@ router = SimpleRouter()
 
 urlpatterns = [
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-<<<<<<< HEAD
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-=======
     path('', cache_page(60)(schema_view.with_ui('swagger', cache_timeout=0)), name='schema-swagger-ui'),
->>>>>>> af67af9879578707a8f0f4098c5bfa2e9642b3fd
     path('admin/', admin.site.urls),
     path('api/v1/', include(router.urls)),
     path('api/v1/accounts/', include('account.urls')),
