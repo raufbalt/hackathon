@@ -12,9 +12,6 @@ from main.tasks import send_email_task
 
 User = get_user_model()
 
-def auth(request):
-    return render(request, 'oauth.html')
-
 class RegistrationView(APIView):
     permission_classes = (permissions.AllowAny,)
 
