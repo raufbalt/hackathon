@@ -31,15 +31,15 @@ class ServiceViewSet(ModelViewSet):
         category = self.request.data.get('category', None)
         category = int(category)
         category1 = get_object_or_404(Category, id=category)
-        Service.objects.create(
+        serializer.save(
             owner=self.request.user,
             price=self.request.data.get("price", None),
             experience=self.request.data.get("experience", None),
             hour_from=self.request.data.get("hour_from", None),
             hour_to=self.request.data.get("hour_to", None),
             desc=self.request.data.get("desc", None),
-            category=category1
-
+            category=category1,
+            image=self.request.data.get("image", None)
         )
 
     # api/v1/service/<id>/reviews/
